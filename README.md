@@ -1,6 +1,7 @@
 # Pulmonary Embolism Detection
  This is the source code for the 11th place solution to the kaggle - RSNA STR Pulmonary Embolism Detection.
-
+# Full Pipeline
+![alt text](https://github.com/OrKatz7/RSNA-Pulmonary-Embolism-Detection/blob/main/RSNA.PNG)
 # Datastes and Preprocessing
 
 # CNN2D
