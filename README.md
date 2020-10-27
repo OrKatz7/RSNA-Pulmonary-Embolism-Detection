@@ -15,6 +15,6 @@
 2.trian and predict expert model for side_pe
 
 # Sequence Models
-trian and sequence model per image and exam
+trian sequence model per image and exam
 
 
