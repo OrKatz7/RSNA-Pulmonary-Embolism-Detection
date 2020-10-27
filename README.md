@@ -9,7 +9,9 @@
 
 # CNN3D
 1.trian and predict expert model for pe/non_pe
+
 2.trian and predict expert model for rv/lv
+
 2.trian and predict expert model for side_pe
 
 # Sequence Models
