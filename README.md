@@ -28,12 +28,21 @@ $source predict.sh
 
 # CNN3D
 1.trian and predict expert model for pe/non_pe
-
+```
+https://github.com/OrKatz7/RSNA-Pulmonary-Embolism-Detection/blob/main/cnn3d/negative_exam_for_pe.ipynb
+```
 2.trian and predict expert model for rv/lv
-
+```
+https://github.com/OrKatz7/RSNA-Pulmonary-Embolism-Detection/blob/main/cnn3d/rv_lv_ratio.ipynb
+```
 2.trian and predict expert model for side_pe
-
+```
+https://github.com/OrKatz7/RSNA-Pulmonary-Embolism-Detection/blob/main/cnn3d/sided_pe.ipynb
+```
 # Sequence Models
 trian sequence model per image and exam
+```
+https://github.com/OrKatz7/RSNA-Pulmonary-Embolism-Detection/blob/main/lstm/train_lstm.ipynb
+```
 
 
