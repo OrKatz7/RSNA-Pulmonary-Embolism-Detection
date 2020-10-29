@@ -16,6 +16,25 @@ kaggle datasets download -d vaillant/rsna-str-pe-detection-jpeg-256
 ###### GREEN channel / PE window / level=100, width=700
 ###### BLUE channel / MEDIASTINAL window / level=40, width=400
 
+# Data structures
+```
+$ kaggle competitions download -c rsna-str-pulmonary-embolism-detection
+     
+├── Datasets  
+│   ├── RSNA      
+│   │   ├── dicom
+│   │   │    ├── train
+│   │   │    ├── test
+│   │   ├── train256
+│   │   │    ├── train-jpegs
+│   │   ├── train.csv
+│   │   ├── test.csv
+├── cnn2d     
+├── cnn3d
+├── lstm
+├── submission.ipynb
+.....
+```
 # CNN2D
 ### 1. train -
 Edit data_config in cnn2d/config.py
