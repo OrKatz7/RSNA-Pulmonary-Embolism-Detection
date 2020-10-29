@@ -20,20 +20,112 @@ kaggle datasets download -d vaillant/rsna-str-pe-detection-jpeg-256
 ```
 $ kaggle competitions download -c rsna-str-pulmonary-embolism-detection
      
-├── Datasets  
-│   ├── RSNA      
-│   │   ├── dicom
-│   │   │    ├── train
-│   │   │    ├── test
-│   │   ├── train256
-│   │   │    ├── train-jpegs
-│   │   ├── train.csv
-│   │   ├── test.csv
-├── cnn2d     
-├── cnn3d
-├── lstm
-├── submission.ipynb
-.....
+|-- Datasets
+|   `-- RSNA
+|       |-- dicom
+|       `-- train256
+|-- LICENSE
+|-- README.md
+|-- RSNA.PNG
+|-- cnn2d
+|   |-- config.py
+|   |-- data.py
+|   |-- feature
+|   |   |-- efficientnet-b2_cnn_0
+|   |   |-- efficientnet-b2_cnn_1
+|   |   |-- efficientnet-b2_cnn_2
+|   |   |-- efficientnet-b2_cnn_3
+|   |   |-- efficientnet-b2_cnn_4
+|   |   |-- efficientnet-b3_cnn_0
+|   |   |-- efficientnet-b3_cnn_1
+|   |   |-- efficientnet-b3_cnn_2
+|   |   |-- efficientnet-b3_cnn_3
+|   |   |-- efficientnet-b3_cnn_4
+|   |   |-- efficientnet-b4_cnn_0
+|   |   |-- efficientnet-b4_cnn_1
+|   |   |-- efficientnet-b4_cnn_2
+|   |   |-- efficientnet-b4_cnn_3
+|   |   |-- efficientnet-b4_cnn_4
+|   |   |-- efficientnet-b5_cnn_0
+|   |   |-- efficientnet-b5_cnn_1
+|   |   |-- efficientnet-b5_cnn_2
+|   |   |-- efficientnet-b5_cnn_3
+|   |   |-- efficientnet-b5_cnn_4
+|   |   `-- efficientnet-b6_cnn_0
+|   |-- log
+|   |   `-- cpt
+|   |   |   `-- efficientnet-b3_cnn_0_best.pth
+|   |   |   |-- efficientnet-b3_cnn_0_last.pth
+|   |   |   |-- efficientnet-b3_cnn_1_best.pth
+|   |   |   |-- efficientnet-b3_cnn_2_best.pth
+|   |   |   |-- efficientnet-b3_cnn_3_best.pth
+|   |   |   |-- efficientnet-b3_cnn_4_best.pth
+|   |   |   |-- efficientnet-b4_cnn_0_best.pth
+|   |   |   |-- efficientnet-b4_cnn_1_best.pth
+|   |   |   |-- efficientnet-b4_cnn_2_best.pth
+|   |   |   |-- efficientnet-b4_cnn_3_best.pth
+|   |   |   |-- efficientnet-b4_cnn_4_best.pth
+|   |   |   |-- efficientnet-b5_cnn_0_best.pth
+|   |   |   |-- efficientnet-b5_cnn_1_best.pth
+|   |   |   |-- efficientnet-b5_cnn_2_best.pth
+|   |   |   |-- efficientnet-b5_cnn_3_best.pth
+|   |   |   `-- efficientnet-b5_cnn_4_best.pth
+|   |-- models.py
+|   |-- predict.sh
+|   |-- predict_feature.py
+|   |-- preprocessing.py
+|   |-- train.py
+|   |-- train.sh
+|   |-- train_utils.py
+|   `-- utils.py
+|-- cnn3d
+|   |-- densenet121_best_fold0.pth
+|   |-- densenet121_best_fold1.pth
+|   |-- densenet121_best_fold2.pth
+|   |-- densenet121_best_fold3.pth
+|   |-- densenet121_best_fold4.pth
+|   |-- densenet121_model_fold0.pth
+|   |-- densenet121_model_fold1.pth
+|   |-- densenet121_model_fold2.pth
+|   |-- densenet121_model_fold3.pth
+|   |-- densenet121_pe_best_fold0.pth
+|   |-- densenet121_pe_best_fold1.pth
+|   |-- densenet121_pe_best_fold2.pth
+|   |-- densenet121_pe_best_fold3.pth
+|   |-- densenet121_pe_best_fold4.pth
+|   |-- densenet121_pe_model_fold0.pth
+|   |-- densenet121_pe_model_fold1.pth
+|   |-- densenet121_pe_model_fold2.pth
+|   |-- densenet121_pe_model_fold3.pth
+|   |-- densenet121_pe_model_fold4.pth
+|   |-- densenet121_rlc_best_fold0.pth
+|   |-- densenet121_rlc_best_fold1.pth
+|   |-- densenet121_rlc_best_fold2.pth
+|   |-- densenet121_rlc_best_fold3.pth
+|   |-- densenet121_rlc_best_fold4.pth
+|   |-- densenet121_rlc_model_fold0.pth
+|   |-- densenet121_rlc_model_fold1.pth
+|   |-- densenet121_rlc_model_fold2.pth
+|   |-- densenet121_rlc_model_fold3.pth
+|   |-- densenet121_rlc_model_fold4.pth
+|   |-- features_densenet121_pe
+|   |-- features_densenet121_rlc
+|   |-- features_rv_lv
+|   |-- negative_exam_for_pe.ipynb
+|   |-- rv_lv_ratio.ipynb
+|   `-- sided_pe.ipynb
+|-- lstm
+|   |-- config.py
+|   |-- log
+|   |   `-- cpt
+|   |   |    |-- lstm_pe_fold_0_best.pth
+|   |   |    `-- lstm_pe_old_fold_0_best.pth
+|   |-- losses.py
+|   |-- train_lstm.ipynb
+|   |-- train_lstm_old.ipynb
+|   `-- utils.py
+`-- submission.ipynb
+
 ```
 # CNN2D
 ### 1. train -
