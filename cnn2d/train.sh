@@ -1,5 +1,3 @@
-python3 preprocessing.py
-
 python3 train.py --config efficientnetb3 --fold 0 --folds 5
 python3 train.py --config efficientnetb3 --fold 1 --folds 5
 python3 train.py --config efficientnetb3 --fold 2 --folds 5
