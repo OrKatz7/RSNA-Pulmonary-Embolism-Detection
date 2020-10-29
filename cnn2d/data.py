@@ -100,3 +100,22 @@ class CTDataset2D(Dataset):
         df1 = self.df_main[self.df_main[:,3]==1]
         np.random.shuffle(df0)
         self.df = np.concatenate([df0[0:len(df1)*2],df1],axis=0)
+class CTDataset3D(Dataset):
+    def __init__(self,df,jpeg_dir,transforms = None,preprocessing=None,size=256,mode='val'):
+        self.df_main = df
+        self.jpeg_dir = jpeg_dir
+        self.transforms = transforms
+        self.preprocessing = preprocessing
+        self.size=size
+
+    def __getitem__(self, idx):
+        mini = self.df_main[idx].values
+        all_paths = [f"{self.jpeg_dir}/{row[0]}/{row[1]}/{row[-1]}_{row[2]}.jpg" for row in mini]
+        img = [self.transforms(image=cv2.imread(p))['image'] for p in all_paths]
+        label = mini[:,3:-1].astype(int)
+        if self.preprocessing:
+            img = [self.preprocessing(image=im)['image'] for im in img]
+        return np.array(img),mini[0,0]
+
+    def __len__(self):
+        return len(self.df_main)
