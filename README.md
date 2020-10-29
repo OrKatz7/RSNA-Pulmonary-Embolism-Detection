@@ -18,8 +18,10 @@ kaggle datasets download -d vaillant/rsna-str-pe-detection-jpeg-256
 
 # CNN2D
 ### 1. train -
+Edit data_config in cnn2d/config.py
 ```
 %cd cnn2d
+$python3 preprocessing.py
 $source train.sh
 ```
 ### 2. predict
