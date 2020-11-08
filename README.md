@@ -2,6 +2,11 @@
  This is the source code for the 10th place solution to the kaggle - RSNA STR Pulmonary Embolism Detection.
 # Full Pipeline
 ![alt text](https://github.com/OrKatz7/RSNA-Pulmonary-Embolism-Detection/blob/main/RSNA.PNG)
+## Overall Strategy 
+### 1. 2D CNN EfficientNet (B5,B4, B3) used for feature extraction per image - (train for 3 days) 
+### 2. 3D CNN densenet121 used for feature extraction per exam - (train for 3 days) 
+### 3. Input the 2d and 3d features into sequence model (lstm) - (train for 2 hours)
+
 # Datastes and Preprocessing
 ## Windowing
 ###### RED channel / LUNG window / level=-600, width=1500
@@ -111,6 +116,17 @@ source run_all.sh
 ```
 # run by steps
 ## CNN2D
+Stage 1 - 2D CNN Modelling: In this stage I trained a 3 CNN models (efficientnet-b3, efficientnet-b4, efficientnet-b5). 
+Etch model trained for 5 folds divided by patient. 
+After this I used these models to create feature extraction per image with the last CNN layer + the image probability.
+### Technical details:
+#### 1. Loss – BCE 
+#### 2. Data augmentation: RandomBrightnessContrast, HorizontalFlip, ElasticTransform, GridDistortion, VerticalFlip, ShiftScaleRotate, RandomCrop 
+#### 3. Target - negative_exam_for_pe
+#### 4. Optimizer – AdamW 
+#### 5. Epochs – 2 
+#### 6. Scheduler - CosineAnnealingLR
+
 ### 1. train -
 Edit data_config in cnn2d/config.py
 ```
@@ -125,6 +141,20 @@ $source predict.sh
 ```
 
 ## CNN3D
+In order to improve performance, and create specific features for each category, I trained 3 three-dimensional models to solve the problem of heart ratio, whether there is PE and on which side.
+All models trained with 5-fold strategy that divided by patient. After this I used these models to create global feature extraction per exam.
+
+1. First 3D model was trained to classify if the exam has pe – in this case I trained the model with all the scans and the target was only negative_exam_for_pe .
+2. The second model was trained to find the heart ratio – in this case I trained the model only with PE patient.
+3. the third was models train to find the pe side - in this case I trained the model with all the scans.
+### Technical details:
+1. Network – 3d densenet 121
+2. Loss – BCE / CE 
+3. Data augmentation: RandomCrop
+4. Optimizer – Adam 
+5. Epochs – 14-20 
+6. Scheduler – CosineAnnealingLR
+
 ### 1.trian and predict expert model for pe/non_pe
 ```
 https://github.com/OrKatz7/RSNA-Pulmonary-Embolism-Detection/blob/main/cnn3d/negative_exam_for_pe.ipynb
@@ -138,6 +168,19 @@ https://github.com/OrKatz7/RSNA-Pulmonary-Embolism-Detection/blob/main/cnn3d/rv_
 https://github.com/OrKatz7/RSNA-Pulmonary-Embolism-Detection/blob/main/cnn3d/sided_pe.ipynb
 ```
 ## Sequence Model
+Gets the data from the two-dimensional and three-dimensional models and gives prediction per image and per examination.
+In order to comply with the competition rules this model has 5 exit layers.
+1. Prediction per image
+2. PE, IND or not PE
+3. Harte ratio
+4. PE side
+5. Acute or not
+After this a post processing is done to make sure that the competition rules are met.
+### Technical details:
+1. Loss – RSNA metric 
+2. Data augmentation: Gaussian noise
+3. Optimizer – AdamW 
+4. Epochs – 6
 ### trian sequence model per image and exam
 ```
 https://github.com/OrKatz7/RSNA-Pulmonary-Embolism-Detection/blob/main/lstm/train_lstm.ipynb
