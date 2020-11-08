@@ -1,8 +1,8 @@
-Package                     Version                Location
---------------------------- ---------------------- --------------------------------------------
+Package                     Version                
+--------------------------- --------
 absl-py                     0.7.1
 addict                      2.2.1
-AdelaiDet                   0.2.0                  /root/AdelaiDet
+AdelaiDet                   0.2.0                  
 albumentations              0.4.6
 apex                        0.1
 astor                       0.8.0
