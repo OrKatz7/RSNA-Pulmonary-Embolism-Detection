@@ -5,11 +5,33 @@
 # Datastes and Preprocessing
 ## dwonload datasets:
 kaggle competitions download -c rsna-str-pulmonary-embolism-detection
-## preprocessing - based on Ian Pan:
+## 1 preprocessing - based on Ian Pan:
 
 https://www.kaggle.com/c/rsna-str-pulmonary-embolism-detection/discussion/182930
 
 kaggle datasets download -d vaillant/rsna-str-pe-detection-jpeg-256
+
+## 2. DATA PROCESSING (if dont use 1.1)
+preprocessing.sh # If you have not performed Section 1
+
+### 2.1 Data structures (with all trained models weights)
+you can change the input/output path from settings.json
+'''
+{"dicom_file_train": "Datasets/RSNA/dicom/train",
+ "train_csv_path": "Datasets/RSNA/train.csv",
+ "jpeg_dir": "Datasets/RSNA/train256/",
+ "test_csv_path": "Datasets/RSNA/dicom/test.csv",
+ "dicom_file_test": "Datasets/RSNA/dicom/test/",
+ "sample_submission":"Datasets/RSNA/dicom/sample_submission.csv",
+ "submission_file":"submission.csv",
+ "MODEL_PATH2D":"cnn2d/log/cpt",
+ "feature2D":"cnn2d/feature",
+ "MODEL_PATH3D":"cnn3d/",
+ "features_densenet121_pe":"cnn3d/features_densenet121_pe",
+ "features_densenet121_rlc":"cnn3d/features_densenet121_rlc",
+ "features_rv_lv":"cnn3d/features_rv_lv",
+ "MODEL_PATH_LSTM":"lstm/log/cpt"}
+'''
 
 ## Windowing
 ###### RED channel / LUNG window / level=-600, width=1500
@@ -19,115 +41,48 @@ kaggle datasets download -d vaillant/rsna-str-pe-detection-jpeg-256
 # Data structures
 ```
 $ kaggle competitions download -c rsna-str-pulmonary-embolism-detection
-     
-|-- Datasets
-|   `-- RSNA
-|       |-- dicom
-|       `-- train256
-|-- LICENSE
-|-- README.md
-|-- RSNA.PNG
-|-- cnn2d
-|   |-- config.py
-|   |-- data.py
-|   |-- feature
-|   |   |-- efficientnet-b2_cnn_0
-|   |   |-- efficientnet-b2_cnn_1
-|   |   |-- efficientnet-b2_cnn_2
-|   |   |-- efficientnet-b2_cnn_3
-|   |   |-- efficientnet-b2_cnn_4
-|   |   |-- efficientnet-b3_cnn_0
-|   |   |-- efficientnet-b3_cnn_1
-|   |   |-- efficientnet-b3_cnn_2
-|   |   |-- efficientnet-b3_cnn_3
-|   |   |-- efficientnet-b3_cnn_4
-|   |   |-- efficientnet-b4_cnn_0
-|   |   |-- efficientnet-b4_cnn_1
-|   |   |-- efficientnet-b4_cnn_2
-|   |   |-- efficientnet-b4_cnn_3
-|   |   |-- efficientnet-b4_cnn_4
-|   |   |-- efficientnet-b5_cnn_0
-|   |   |-- efficientnet-b5_cnn_1
-|   |   |-- efficientnet-b5_cnn_2
-|   |   |-- efficientnet-b5_cnn_3
-|   |   |-- efficientnet-b5_cnn_4
-|   |   `-- efficientnet-b6_cnn_0
-|   |-- log
-|   |   `-- cpt
-|   |   |   `-- efficientnet-b3_cnn_0_best.pth
-|   |   |   |-- efficientnet-b3_cnn_0_last.pth
-|   |   |   |-- efficientnet-b3_cnn_1_best.pth
-|   |   |   |-- efficientnet-b3_cnn_2_best.pth
-|   |   |   |-- efficientnet-b3_cnn_3_best.pth
-|   |   |   |-- efficientnet-b3_cnn_4_best.pth
-|   |   |   |-- efficientnet-b4_cnn_0_best.pth
-|   |   |   |-- efficientnet-b4_cnn_1_best.pth
-|   |   |   |-- efficientnet-b4_cnn_2_best.pth
-|   |   |   |-- efficientnet-b4_cnn_3_best.pth
-|   |   |   |-- efficientnet-b4_cnn_4_best.pth
-|   |   |   |-- efficientnet-b5_cnn_0_best.pth
-|   |   |   |-- efficientnet-b5_cnn_1_best.pth
-|   |   |   |-- efficientnet-b5_cnn_2_best.pth
-|   |   |   |-- efficientnet-b5_cnn_3_best.pth
-|   |   |   `-- efficientnet-b5_cnn_4_best.pth
-|   |-- models.py
-|   |-- predict.sh
-|   |-- predict_feature.py
-|   |-- preprocessing.py
-|   |-- train.py
-|   |-- train.sh
-|   |-- train_utils.py
-|   `-- utils.py
-|-- cnn3d
-|   |-- densenet121_best_fold0.pth
-|   |-- densenet121_best_fold1.pth
-|   |-- densenet121_best_fold2.pth
-|   |-- densenet121_best_fold3.pth
-|   |-- densenet121_best_fold4.pth
-|   |-- densenet121_model_fold0.pth
-|   |-- densenet121_model_fold1.pth
-|   |-- densenet121_model_fold2.pth
-|   |-- densenet121_model_fold3.pth
-|   |-- densenet121_pe_best_fold0.pth
-|   |-- densenet121_pe_best_fold1.pth
-|   |-- densenet121_pe_best_fold2.pth
-|   |-- densenet121_pe_best_fold3.pth
-|   |-- densenet121_pe_best_fold4.pth
-|   |-- densenet121_pe_model_fold0.pth
-|   |-- densenet121_pe_model_fold1.pth
-|   |-- densenet121_pe_model_fold2.pth
-|   |-- densenet121_pe_model_fold3.pth
-|   |-- densenet121_pe_model_fold4.pth
-|   |-- densenet121_rlc_best_fold0.pth
-|   |-- densenet121_rlc_best_fold1.pth
-|   |-- densenet121_rlc_best_fold2.pth
-|   |-- densenet121_rlc_best_fold3.pth
-|   |-- densenet121_rlc_best_fold4.pth
-|   |-- densenet121_rlc_model_fold0.pth
-|   |-- densenet121_rlc_model_fold1.pth
-|   |-- densenet121_rlc_model_fold2.pth
-|   |-- densenet121_rlc_model_fold3.pth
-|   |-- densenet121_rlc_model_fold4.pth
-|   |-- features_densenet121_pe
-|   |-- features_densenet121_rlc
-|   |-- features_rv_lv
-|   |-- negative_exam_for_pe.ipynb
-|   |-- rv_lv_ratio.ipynb
-|   `-- sided_pe.ipynb
-|-- lstm
-|   |-- config.py
-|   |-- log
-|   |   `-- cpt
-|   |   |    |-- lstm_pe_fold_0_best.pth
-|   |   |    `-- lstm_pe_old_fold_0_best.pth
-|   |-- losses.py
-|   |-- train_lstm.ipynb
-|   |-- train_lstm_old.ipynb
-|   `-- utils.py
-`-- submission.ipynb
-
+├── Datasets  
+│   ├── RSNA      
+│   │   ├── dicom
+│   │   │    ├── train
+│   │   │    ├── test
+│   │   │    ├── test.csv
+│   │   │    ├── train.csv
+│   │   │    ├── sample_submission.csv
+│   │   ├── train256
+│   │   │    ├── 0003b3d648eb
+│   │   │    ├── 000f7f114264
+│   │   │    ├── ...
+│   │   ├── train.csv
+│   │   ├── test.csv
 ```
-# CNN2D
+# Models Weights
+## from the root path:
+```
+kaggle datasets download -d orkatz2/rsna20
+unzip -q rsna20.zip 
+mv cnn2d_cpt/* cnn2d/
+rm -rf cnn2d_cpt
+mv cnn3d_cpt/* cnn3d/
+rm -rf cnn3d_cpt
+mkdir lstm/cpt/
+mkdir lstm/cpt/log
+mv lstm_pe_fold_0_best.pth lstm/cpt/log/
+mv lstm_pe_old_fold_0_best.pth lstm/cpt/log/
+rm -rf rsna20.zip
+```
+# run only submission
+```
+source run_sub.sh
+```
+# run all
+Edit settings.json
+```
+source preprocessing.sh
+source run_all.sh
+```
+# run by steps
+## CNN2D
 ### 1. train -
 Edit data_config in cnn2d/config.py
 ```
@@ -141,7 +96,7 @@ $source train.sh
 $source predict.sh
 ```
 
-# CNN3D
+## CNN3D
 ### 1.trian and predict expert model for pe/non_pe
 ```
 https://github.com/OrKatz7/RSNA-Pulmonary-Embolism-Detection/blob/main/cnn3d/negative_exam_for_pe.ipynb
@@ -154,7 +109,7 @@ https://github.com/OrKatz7/RSNA-Pulmonary-Embolism-Detection/blob/main/cnn3d/rv_
 ```
 https://github.com/OrKatz7/RSNA-Pulmonary-Embolism-Detection/blob/main/cnn3d/sided_pe.ipynb
 ```
-# Sequence Model
+## Sequence Model
 ### trian sequence model per image and exam
 ```
 https://github.com/OrKatz7/RSNA-Pulmonary-Embolism-Detection/blob/main/lstm/train_lstm.ipynb
