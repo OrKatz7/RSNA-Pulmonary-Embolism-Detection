@@ -16,8 +16,8 @@ def get_training_augmentation(y=224,x=224):
     train_transform = [
                        albu.RandomBrightnessContrast(p=0.5),
                        albu.HorizontalFlip(p=0.5),
-                       albu.ElasticTransform(p=0.2),
-                       albu.GridDistortion(p=0.2),
+#                        albu.ElasticTransform(p=0.2),
+#                        albu.GridDistortion(p=0.2),
                        albu.VerticalFlip(p=0.5),
                        albu.ShiftScaleRotate(shift_limit=0.05, scale_limit=0.05, rotate_limit=90, p=0.3, border_mode = cv2.BORDER_REPLICATE),
 #                          albu.Transpose(p=0.5),
@@ -100,6 +100,7 @@ class CTDataset2D(Dataset):
         df1 = self.df_main[self.df_main[:,3]==1]
         np.random.shuffle(df0)
         self.df = np.concatenate([df0[0:len(df1)*2],df1],axis=0)
+
 class CTDataset3D(Dataset):
     def __init__(self,df,jpeg_dir,transforms = None,preprocessing=None,size=256,mode='val'):
         self.df_main = df

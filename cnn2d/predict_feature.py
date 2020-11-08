@@ -23,7 +23,12 @@ import argparse
 import pretrainedmodels
 from torch import nn
 os.environ["CUDA_VISIBLE_DEVICES"]="0"
-
+import json 
+  
+# Opening JSON file 
+with open('../settings.json') as json_file: 
+    settings = json.load(json_file)
+    
 if __name__ == "__main__":
     my_parser = argparse.ArgumentParser(description='RSNA - Pulmonary Embolism Detection: predict feature for lstm')
     my_parser.add_argument('--config',type=str)
@@ -72,18 +77,28 @@ if __name__ == "__main__":
     model_config.model_name = model_config.model_name + f"_cnn_{args.fold}"
     cnn.load_state_dict(torch.load(model_config.MODEL_PATH+"/{}_best.pth".format(model_config.model_name)))
     print(model_config.MODEL_PATH+"/{}_best.pth".format(model_config.model_name))
-    dir_name = f"feature/{model_config.model_name}"
+    f_name = "../"+settings['feature2D']
+    dir_name = f"{f_name}/{model_config.model_name}"
     if not os.path.exists(dir_name):
         os.makedirs(dir_name)
     cnn.eval()
     for x,n in tqdm(val):
         with torch.no_grad():
             x = x[0]
-            y = []
+            y = np.zeros([len(x),size+1]).astype(float)
             for row in range(0,len(x),100):
-                y.append(fun(x[row:row+100].cuda().float()).cpu().numpy())
-            y = np.concatenate(y,axis=0)
+                y[row:row+100,:-1] = torch.nn.AdaptiveAvgPool2d(1)(cnn.module.extract_features(x[row:row+100].cuda().float()))[:,:,0,0].cpu().numpy()
+                y[row:row+100,-1] = cnn(x[row:row+100].cuda().float()).cpu().numpy().reshape(-1)
             np.save(f"{dir_name}/{n[0]}.npy",y)
+#     z = 0      
+#     for x,n in tqdm(val):
+#         with torch.no_grad():
+#             x = x[0]
+#             y = []
+#             for row in range(0,len(x),100):
+#                 y.append(fun(x[row:row+100].cuda().float()).cpu().numpy())
+#             y = np.concatenate(y,axis=0)
+#             np.save(f"{dir_name}/{n[0]}.npy",y)
 
         
         

@@ -54,11 +54,8 @@ class Lungs(Dataset):
     def get(self, i):
         return load_dicom_array(self.dicom_folders[i])
     def __getitem__(self, i):
-        try:
-            return self.get(i)
-        except Exception as e:
-            print(e)
-            return None
+        return self.get(i)
+
 
 
 SAVEDIR = data_config.jpeg_dir
@@ -67,16 +64,16 @@ MAX_LENGTH = 256.
 if not osp.exists(SAVEDIR): os.makedirs(SAVEDIR)
 
 df = pd.read_csv(data_config.train_csv_path)
-dicom_folders = list((data_config.dicom_file  + df.StudyInstanceUID + '/'+ df.SeriesInstanceUID).unique())[5645:]
+dicom_folders = list((data_config.dicom_file + '/' + df.StudyInstanceUID + '/'+ df.SeriesInstanceUID).unique())
+print(dicom_folders)
 dset = Lungs(dicom_folders)
 loader = DataLoader(dset, batch_size=1, shuffle=False, num_workers=0, collate_fn=lambda x: x)
 
 for data in tqdm(loader, total=len(loader)):
     data = data[0]
     if type(data) == type(None): continue
-    try:
+    if True:
         image, files = data
-        # Windows from https://pubs.rsna.org/doi/pdf/10.1148/rg.245045008
         image_lung = np.expand_dims(window(image, WL=-600, WW=1500), axis=3)
         image_mediastinal = np.expand_dims(window(image, WL=40, WW=400), axis=3)
         image_pe_specific = np.expand_dims(window(image, WL=100, WW=700), axis=3)
@@ -85,8 +82,6 @@ for data in tqdm(loader, total=len(loader)):
         image = zoom(image, [1.,rat,rat,1.], prefilter=False, order=1)
         files = edit_filenames(files)
         save_array(image, SAVEDIR, files)
-    except Exception as e:
-        print(e)
 
 
 # kaggle datasets create -u -r zip -p ../../data/train-jpegs/
