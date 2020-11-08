@@ -16,7 +16,7 @@ preprocessing.sh # If you have not performed Section 1
 
 ### 2.1 Data structures (with all trained models weights)
 you can change the input/output path from settings.json
-'''
+```
 {"dicom_file_train": "Datasets/RSNA/dicom/train",
 
  "train_csv_path": "Datasets/RSNA/train.csv",
@@ -44,7 +44,7 @@ you can change the input/output path from settings.json
  "features_rv_lv":"cnn3d/features_rv_lv",
  
  "MODEL_PATH_LSTM":"lstm/log/cpt"}
-'''
+```
 
 ## Windowing
 ###### RED channel / LUNG window / level=-600, width=1500
