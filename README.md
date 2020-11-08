@@ -174,6 +174,7 @@ In order to comply with the competition rules this model has 5 exit layers.
 3. Harte ratio
 4. PE side
 5. Acute or not
+
 After this a post processing is done to make sure that the competition rules are met.
 ### Technical details:
 1. Loss – RSNA metric 
