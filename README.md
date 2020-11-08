@@ -9,6 +9,7 @@
 ###### BLUE channel / MEDIASTINAL window / level=40, width=400
 
 ## 1.dwonload datasets:
+```
 mkdir Datasets/RSNA
 mkdir Datasets/RSNA/dicom
 mkdir Datasets/RSNA/train256
@@ -17,7 +18,9 @@ kaggle competitions download -c rsna-str-pulmonary-embolism-detection
 unzip rsna-str-pulmonary-embolism-detection.zip
 cp train.csv ../
 cp test.csv ../
+```
 ## 1.1 If you want to save the pre-processing time you can download the data set after pre-processing - based on Ian Pan
+```
 cd ../ # Now we in Datasets/RSNA
 kaggle datasets download -d vaillant/rsna-str-pe-detection-jpeg-256
 unzip -q rsna-str-pe-detection-jpeg-256.zip
@@ -25,7 +28,7 @@ mkdir train256
 mv  train-jpegs/* train256/*
 rm -rf rsna-str-pe-detection-jpeg-256.zip
 cd ../../ # now we in root path
-
+```
 ## 2. DATA PROCESSING (if dont use 1.1)
 preprocessing.sh # If you have not performed Section 1.1
 
