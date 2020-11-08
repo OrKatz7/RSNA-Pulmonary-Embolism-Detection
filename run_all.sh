@@ -1,0 +1,10 @@
+cd cnn2d
+mkdir feature
+source train.sh
+source predict.sh
+cd ../cnn3d
+source train_predict.sh
+cd ../lstm
+source train.sh
+cd ..
+source run_sub.sh
