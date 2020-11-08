@@ -154,17 +154,10 @@ All models trained with 5-fold strategy that divided by patient. After this I us
 5. Epochs – 14-20 
 6. Scheduler – CosineAnnealingLR
 
-### 1.trian and predict expert model for pe/non_pe
+### 1.trian and predict
 ```
-https://github.com/OrKatz7/RSNA-Pulmonary-Embolism-Detection/blob/main/cnn3d/negative_exam_for_pe.ipynb
-```
-### 2.trian and predict expert model for rv/lv
-```
-https://github.com/OrKatz7/RSNA-Pulmonary-Embolism-Detection/blob/main/cnn3d/rv_lv_ratio.ipynb
-```
-### 3.trian and predict expert model for side_pe
-```
-https://github.com/OrKatz7/RSNA-Pulmonary-Embolism-Detection/blob/main/cnn3d/sided_pe.ipynb
+%cd cnn3d
+$source train_predict.sh
 ```
 ## Sequence Model
 Gets the data from the two-dimensional and three-dimensional models and gives prediction per image and per examination.
@@ -183,7 +176,8 @@ After this a post processing is done to make sure that the competition rules are
 4. Epochs – 6
 ### trian sequence model per image and exam
 ```
-https://github.com/OrKatz7/RSNA-Pulmonary-Embolism-Detection/blob/main/lstm/train_lstm.ipynb
+%cd lstm
+$source train.sh
 ```
 
 # References
