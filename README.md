@@ -3,9 +3,9 @@
 # Full Pipeline
 ![alt text](https://github.com/OrKatz7/RSNA-Pulmonary-Embolism-Detection/blob/main/RSNA.PNG)
 ## Overall Strategy 
-### 1. 2D CNN EfficientNet (B5,B4, B3) used for feature extraction per image - (train for 3 days) 
-### 2. 3D CNN densenet121 used for feature extraction per exam - (train for 3 days) 
-### 3. Input the 2d and 3d features into sequence model (lstm) - (train for 2 hours)
+1. 2D CNN EfficientNet (B5,B4, B3) used for feature extraction per image - (train for 3 days) 
+2. 3D CNN densenet121 used for feature extraction per exam - (train for 3 days) 
+3. Input the 2d and 3d features into sequence model (lstm) - (train for 2 hours)
 
 # Datastes and Preprocessing
 ## Windowing
