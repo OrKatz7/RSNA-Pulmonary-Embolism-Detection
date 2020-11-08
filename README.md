@@ -3,18 +3,33 @@
 # Full Pipeline
 ![alt text](https://github.com/OrKatz7/RSNA-Pulmonary-Embolism-Detection/blob/main/RSNA.PNG)
 # Datastes and Preprocessing
-## dwonload datasets:
+## Windowing
+###### RED channel / LUNG window / level=-600, width=1500
+###### GREEN channel / PE window / level=100, width=700
+###### BLUE channel / MEDIASTINAL window / level=40, width=400
+
+## 1.dwonload datasets:
+mkdir Datasets/RSNA
+mkdir Datasets/RSNA/dicom
+mkdir Datasets/RSNA/train256
+cd Datasets/RSNA/dicom
 kaggle competitions download -c rsna-str-pulmonary-embolism-detection
-## 1 preprocessing - based on Ian Pan:
-
-https://www.kaggle.com/c/rsna-str-pulmonary-embolism-detection/discussion/182930
-
+unzip rsna-str-pulmonary-embolism-detection.zip
+cp train.csv ../
+cp test.csv ../
+## 1.1 If you want to save the pre-processing time you can download the data set after pre-processing - based on Ian Pan
+cd ../ # Now we in Datasets/RSNA
 kaggle datasets download -d vaillant/rsna-str-pe-detection-jpeg-256
+unzip -q rsna-str-pe-detection-jpeg-256.zip
+mkdir train256
+mv  train-jpegs/* train256/*
+rm -rf rsna-str-pe-detection-jpeg-256.zip
+cd ../../ # now we in root path
 
 ## 2. DATA PROCESSING (if dont use 1.1)
-preprocessing.sh # If you have not performed Section 1
+preprocessing.sh # If you have not performed Section 1.1
 
-### 2.1 Data structures (with all trained models weights)
+### 2.1 Data input/output
 you can change the input/output path from settings.json
 ```
 {"dicom_file_train": "Datasets/RSNA/dicom/train",
@@ -45,11 +60,6 @@ you can change the input/output path from settings.json
  
  "MODEL_PATH_LSTM":"lstm/log/cpt"}
 ```
-
-## Windowing
-###### RED channel / LUNG window / level=-600, width=1500
-###### GREEN channel / PE window / level=100, width=700
-###### BLUE channel / MEDIASTINAL window / level=40, width=400
 
 # Data structures
 ```
