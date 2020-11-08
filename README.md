@@ -120,12 +120,12 @@ Stage 1 - 2D CNN Modelling: In this stage I trained a 3 CNN models (efficientnet
 Etch model trained for 5 folds divided by patient. 
 After this I used these models to create feature extraction per image with the last CNN layer + the image probability.
 ### Technical details:
-#### 1. Loss – BCE 
-#### 2. Data augmentation: RandomBrightnessContrast, HorizontalFlip, ElasticTransform, GridDistortion, VerticalFlip, ShiftScaleRotate, RandomCrop 
-#### 3. Target - negative_exam_for_pe
-#### 4. Optimizer – AdamW 
-#### 5. Epochs – 2 
-#### 6. Scheduler - CosineAnnealingLR
+1. Loss – BCE 
+2. Data augmentation: RandomBrightnessContrast, HorizontalFlip, ElasticTransform, GridDistortion, VerticalFlip, ShiftScaleRotate, RandomCrop 
+3. Target - negative_exam_for_pe
+4. Optimizer – AdamW 
+5. Epochs – 2 
+6. Scheduler - CosineAnnealingLR
 
 ### 1. train -
 Edit data_config in cnn2d/config.py
