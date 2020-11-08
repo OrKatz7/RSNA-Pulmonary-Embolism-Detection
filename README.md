@@ -186,4 +186,11 @@ After this a post processing is done to make sure that the competition rules are
 https://github.com/OrKatz7/RSNA-Pulmonary-Embolism-Detection/blob/main/lstm/train_lstm.ipynb
 ```
 
-
+# References
+```
+https://github.com/darraghdog/rsna
+https://github.com/SeuTao/RSNA2019_Intracranial-Hemorrhage-Detection
+https://www.kaggle.com/c/rsna-str-pulmonary-embolism-detection/discussion/182930
+https://www.kaggle.com/c/rsna-str-pulmonary-embolism-detection/discussion/190879
+```
+https://www.kaggle.com/c/rsna-str-pulmonary-embolism-detection/discussion/183850
