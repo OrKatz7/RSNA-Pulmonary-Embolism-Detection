@@ -43,31 +43,18 @@ preprocessing.sh # If you have not performed Section 1.1
 you can change the input/output path from settings.json
 ```
 {"dicom_file_train": "Datasets/RSNA/dicom/train",
-
  "train_csv_path": "Datasets/RSNA/train.csv",
- 
  "jpeg_dir": "Datasets/RSNA/train256/",
- 
  "test_csv_path": "Datasets/RSNA/dicom/test.csv",
- 
  "dicom_file_test": "Datasets/RSNA/dicom/test/",
- 
  "sample_submission":"Datasets/RSNA/dicom/sample_submission.csv",
- 
  "submission_file":"submission.csv",
- 
  "MODEL_PATH2D":"cnn2d/log/cpt",
- 
  "feature2D":"cnn2d/feature",
- 
  "MODEL_PATH3D":"cnn3d/",
- 
  "features_densenet121_pe":"cnn3d/features_densenet121_pe",
- 
  "features_densenet121_rlc":"cnn3d/features_densenet121_rlc",
- 
  "features_rv_lv":"cnn3d/features_rv_lv",
- 
  "MODEL_PATH_LSTM":"lstm/log/cpt"}
 ```
 
