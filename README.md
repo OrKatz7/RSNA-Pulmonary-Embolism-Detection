@@ -111,7 +111,6 @@ source run_sub.sh
 # run all
 Edit settings.json
 ```
-source preprocessing.sh
 source run_all.sh
 ```
 # run by steps
