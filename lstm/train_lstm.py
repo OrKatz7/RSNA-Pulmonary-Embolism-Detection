@@ -1,36 +1,29 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[ ]:
-
 import json 
   
 with open('../settings.json') as json_file: 
     settings = json.load(json_file)
-    
 import glob
 import os
 from matplotlib import pyplot as plt
 import cv2
 import numpy as np
 import pandas as pd
+import torch
+from tqdm.auto import tqdm
+from apex import amp
 from torch.utils.data import TensorDataset, DataLoader,Dataset
 import albumentations as albu
 from skimage.color import gray2rgb
 import functools
-import torch
-from tqdm.auto import tqdm
+from torch import nn
+from torch.nn import functional as F
 from config import *
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 from utils import get_train_val
-import os
-from apex import amp
-os.environ["CUDA_VISIBLE_DEVICES"]="0"
-from tqdm.auto import tqdm
-from apex import amp
 import pretrainedmodels
-from torch import nn
 import random
+os.environ["CUDA_VISIBLE_DEVICES"]="0"
+
 
 def set_seed(seed):
     random.seed(seed)
@@ -39,50 +32,12 @@ def set_seed(seed):
     
 from losses import *
 
-
-# In[ ]:
-
-
-# set_seed(7777)
-
-
-# In[ ]:
-
-
 FOLD = 0
 FOLDS=5
 conf = 'lstm_pe'#'lstm_pe_neg'
-
-
-# In[ ]:
-
-
 model_config = eval(conf)
 mini_dfs,mini_dfs_val = get_train_val(data_config,FOLD,FOLDS)
-
-
-# In[ ]:
-
-
 model_config.model_name
-
-
-# In[ ]:
-
-
-import numpy as np # linear algebra
-import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
-import glob
-import cv2
-import os
-from torch.utils.data import TensorDataset, DataLoader,Dataset
-import albumentations as albu
-import functools
-import torch
-import pydicom
-import vtk
-from vtk.util import numpy_support
-
 
 def Zcrop(img,label):
     z = np.random.randint(30)/100.0
@@ -146,9 +101,6 @@ class CTDatasetLstm(Dataset):
         except:
             print(mini[0,0])
             return self.__getitem__(np.random.randint(self.__len__()))
-#         global_rv_lv = np.load(f"../cnn3d/features_rv_lv/{mini[0,0]}_3dcnn.npy")
-#         global_rlc = np.load(f"../cnn3d/features_densenet121_rlc/{mini[0,0]}_3dcnn.npy")
-#         global_pe = np.load(f"../cnn3d/features_densenet121_pe/{mini[0,0]}_3dcnn.npy")
         global_rv_lv = np.load(f"../{settings['features_rv_lv']}/{mini[0,0]}_3dcnn.npy")
         global_rlc = np.load(f"../{settings['features_densenet121_rlc']}/{mini[0,0]}_3dcnn.npy")
         global_pe = np.load(f"../{settings['features_densenet121_pe']}/{mini[0,0]}_3dcnn.npy")
@@ -165,32 +117,13 @@ class CTDatasetLstm(Dataset):
     def __len__(self):
         return len(self.df_main)
 
-
-# In[ ]:
-
-
 train_dataset = CTDatasetLstm(mini_dfs,model_config.dirs,transforms=None,preprocessing=None)#augment
 val_dataset = CTDatasetLstm(mini_dfs_val,model_config.dirs,transforms=None,preprocessing=None)
 train = DataLoader(train_dataset, batch_size=1, shuffle=True, num_workers=10, pin_memory=False)
 val = DataLoader(val_dataset, batch_size=1, shuffle=False, num_workers=10, pin_memory=False)
 
-
-# In[ ]:
-
-
 g_x,g_y,g_z,x,y,y1,y3 = val_dataset[2]
-
-
-# In[ ]:
-
-
-from torch import nn
-from torch.nn import functional as F
-import torch
-
 sigmoid = nn.Sigmoid()
-
-
 
 class Swish(torch.autograd.Function):
     @staticmethod
@@ -301,27 +234,8 @@ class NeuralNet2(nn.Module):
         output_global3 = self.linear_global_fc3(hidden_rlc)
         return output,output_global0,output_global1,output_global2,output_global3
 
-
-# In[ ]:
-
-
 embed_size = x.shape[1]
-embed_size
 
-
-# In[ ]:
-
-
-import torch
-import numpy as np
-from tqdm.auto import tqdm
-import os
-from apex import amp
-import torch
-import numpy as np
-from tqdm.auto import tqdm
-import os
-from apex import amp
 class trainer:
     def __init__(self,loss_fn,model,optimizer,scheduler,config):
         self.loss_fn = loss_fn
@@ -411,9 +325,6 @@ class trainer:
             print("load best model")
 
 
-# In[ ]:
-
-
 for g in [0.05]:
     for DO in [0.5]:
         print("*************************************************************************")
@@ -434,65 +345,4 @@ for g in [0.05]:
         Trainer = trainer(ComboLoss(),model,optimizer,scheduler,config=model_config)
         Trainer.run(train,val)
         print("*************************************************************************")
-
-
-# In[ ]:
-
-
-v= iter(val)
-
-
-# In[ ]:
-
-
-Trainer.load_best_model()
-
-
-# In[ ]:
-
-
-# import matplotlib.patches as mpatches
-# Trainer.model.eval()
-# x3d,x3d1,x3d2,x,y,y1,y2 = next(v)
-# with torch.no_grad():
-#     pred = Trainer.model(x.cuda().float()[0],x3d.cuda().float(),x3d1.cuda().float(),x3d2.cuda().float())
-#     res = torch.sigmoid(pred[0].reshape(-1)).detach().cpu().numpy().reshape(-1)
-#     res1 = torch.softmax(pred[1],dim=1).cpu().numpy().reshape(-1).tolist()
-#     res1 = res1+ torch.softmax(pred[2],dim=1).cpu().numpy().reshape(-1).tolist()
-#     res1 = res1+torch.sigmoid(pred[4]).cpu().numpy().reshape(-1).tolist()
-#     res1 = res1+torch.softmax(pred[3],dim=1).cpu().numpy().reshape(-1).tolist()
-#     y_numpy = y.detach().cpu().numpy().reshape(-1)
-#     y1_numpy = y1.detach().cpu().numpy().reshape(-1).tolist() + y2.detach().cpu().numpy().reshape(-1).tolist() 
-# plt.figure(figsize=[15,8])
-# plt.subplot(131)
-# plt.plot(y_numpy,label='gt',color='blue')
-# # plt.plot(res/2+torch.sigmoid(x[0,:,:,-1]).cpu().numpy()/2,label='pred',color='green')
-# plt.plot(res,label='pred',color='red')
-# plt.xlabel("slices")
-# plt.ylabel("PE")
-# plt.ylim(0, 1.3)
-# plt.title("lstm")
-# red_patch = mpatches.Patch(color='red', label='pred')
-# blue_patch = mpatches.Patch(color='blue', label='gt')
-# plt.legend(handles=[red_patch,blue_patch])
-# plt.subplot(132)
-# plt.plot(y_numpy,label='gt',color='blue')
-# plt.plot(torch.sigmoid(x[0,:,2048]).cpu().numpy(),color='green')
-# # plt.plot(torch.sigmoid(x[0,0,:,2048]).cpu().numpy(),color='red')
-# plt.ylim(0, 1.3)
-# plt.title("classification - EfficientNet B5")
-# plt.subplot(133)
-# plt.plot(["PE","NEG","IND","RV>1","RV<1","NPE","R","L","C","CH","CH+AC","NPE2","AC"],y1_numpy,'o', color='red',label='gt')
-# plt.plot(res1,'o', color='blue',label='pe')
-# # plt.subplot(133)
-# # plt.bar(np.arange(len(y1_numpy)),y1_numpy-res1)
-# # plt.ylim(-1, 1)
-# plt.show()
-# print(x[0].shape)
-
-
-# In[ ]:
-
-
-
 
