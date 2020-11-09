@@ -24,7 +24,7 @@ unzip rsna-str-pulmonary-embolism-detection.zip
 cp train.csv ../
 cp test.csv ../
 ```
-## 1.1 If you want to save the pre-processing time you can download the data set after pre-processing - based on Ian Pan
+## 1.1 Download the data set after pre-processing - based on Ian Pan
 ```
 cd ../ # Now we in Datasets/RSNA
 kaggle datasets download -d vaillant/rsna-str-pe-detection-jpeg-256
