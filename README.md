@@ -34,7 +34,7 @@ mv  train-jpegs/* train256/*
 rm -rf rsna-str-pe-detection-jpeg-256.zip
 cd ../../ # now we in root path
 ```
-## 2. DATA PROCESSING (if dont use 1.1)
+## 2. Data preprocessing (if you don't use 1.1)
 ```
 preprocessing.sh # If you have not performed Section 1.1
 ```
