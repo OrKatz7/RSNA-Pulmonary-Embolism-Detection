@@ -1,5 +1,5 @@
 # Pulmonary Embolism Detection
-This repository represents NEC - Israel Research Center (IRC) open-source research for the 10th place solution to the kaggle - RSNA STR Pulmonary Embolism Detection.
+This repository represents NEC - Israel Research Center (IRC) open-source research Developed by [Or Katz](https://www.linkedin.com/in/or-katz-9ba885114/) for the 10th place solution to the kaggle - RSNA STR Pulmonary Embolism Detection.
 # Full Pipeline
 ![alt text](https://github.com/OrKatz7/RSNA-Pulmonary-Embolism-Detection/blob/main/RSNA.PNG)
 ## Overall Strategy 
